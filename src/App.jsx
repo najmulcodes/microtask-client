@@ -22,6 +22,18 @@ import ManageUsers from "./pages/admin/ManageUsers";
 import ManageTasks from "./pages/admin/ManageTasks";
 import ManageWithdrawals from "./pages/admin/ManageWithdrawals";
 
+function RootRedirect() {
+  const { user, loading } = useAuth();
+
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500" />
+    </div>
+  );
+
+  return user ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />;
+}
+
 function DashboardRedirect() {
   const { user } = useAuth();
   if (!user) return null;
@@ -32,11 +44,13 @@ function DashboardRedirect() {
 }
 
 function App() {
+  const { user } = useAuth();
+
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<RootRedirect />} />
+      <Route path="/register" element={user ? <Navigate to="/dashboard" replace /> : <Register />} />
+      <Route path="/login" element={user ? <Navigate to="/dashboard" replace /> : <Login />} />
 
       <Route path="/dashboard" element={<PrivateRoute><DashboardLayout /></PrivateRoute>}>
         <Route index element={<DashboardRedirect />} />
