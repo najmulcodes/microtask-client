@@ -177,7 +177,7 @@ git push -u origin main
 
 ## 🚢 Deploy
 
-- **Backend** → [Railway](https://railway.app) or [Render](https://render.com)
-- **Frontend** → [Vercel](https://vercel.com) or [Netlify](https://netlify.com)
+- **Backend** →  [Render] https://microtask-server-cgj9.onrender.com
+- **Frontend** → [Vercel] microtask-client-iota.vercel.app
 
 > After deploying, update `CLIENT_URL` in server `.env` and `VITE_API_URL` in client `.env`
