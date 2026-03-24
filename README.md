@@ -3,6 +3,7 @@
 A full-stack micro-tasking platform where **Buyers** post tasks, **Workers** complete them, and an **Admin** manages the entire ecosystem. Built with React + Vite and deployed on Vercel.
 
 🔗 **Live Site:** https://microtask-client-iota.vercel.app
+
    ** DEMO LOGIN:** {email:"admin@microtask.com",password:"Admin123",role:"Admin"}
 ---
 
