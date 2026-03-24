@@ -4,7 +4,11 @@ A full-stack micro-tasking platform where **Buyers** post tasks, **Workers** com
 
 🔗 **Live Site:** https://microtask-client-iota.vercel.app
 
-   **DEMO LOGIN:** Email: "admin@microtask.com" , Password: "Admin123", Role:"Admin"
+   **DEMO LOGIN:** 
+  Email: "admin@microtask.com" 
+  Password: "Admin123" 
+  Role:"Admin"
+
 ---
 
 ## Features
