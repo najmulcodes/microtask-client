@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import PrivateRoute from "./routes/PrivateRoute";
 
+import Home, { Navbar, Footer } from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import DashboardLayout from "./pages/DashboardLayout";
@@ -22,17 +23,14 @@ import ManageUsers from "./pages/admin/ManageUsers";
 import ManageTasks from "./pages/admin/ManageTasks";
 import ManageWithdrawals from "./pages/admin/ManageWithdrawals";
 
-function RootRedirect() {
-  const { user, loading } = useAuth();
-
-  if (loading) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500" />
-    </div>
-  );
-
-  return user ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />;
-}
+/* Layout wrapper that includes Navbar + Footer for public pages */
+const PublicLayout = ({ children }) => (
+  <>
+    <Navbar />
+    {children}
+    <Footer />
+  </>
+);
 
 function DashboardRedirect() {
   const { user } = useAuth();
@@ -44,14 +42,32 @@ function DashboardRedirect() {
 }
 
 function App() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
+  if (loading)
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500" />
+      </div>
+    );
 
   return (
     <Routes>
-      <Route path="/" element={<RootRedirect />} />
+      {/* Public home page */}
+      <Route
+        path="/"
+        element={
+          <PublicLayout>
+            <Home />
+          </PublicLayout>
+        }
+      />
+
+      {/* Auth pages (no navbar/footer needed) */}
       <Route path="/register" element={user ? <Navigate to="/dashboard" replace /> : <Register />} />
       <Route path="/login" element={user ? <Navigate to="/dashboard" replace /> : <Login />} />
 
+      {/* Dashboard (protected) */}
       <Route path="/dashboard" element={<PrivateRoute><DashboardLayout /></PrivateRoute>}>
         <Route index element={<DashboardRedirect />} />
 
@@ -75,7 +91,7 @@ function App() {
         <Route path="admin/manage-withdrawals" element={<PrivateRoute allowedRoles={["admin"]}><ManageWithdrawals /></PrivateRoute>} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
